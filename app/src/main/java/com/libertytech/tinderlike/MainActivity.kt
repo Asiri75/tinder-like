@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.libertytech.tinderlike.model.Partenaire
+import com.libertytech.tinderlike.screens.login.LoginScreen
 import com.libertytech.tinderlike.ui.theme.TinderLikeTheme
 import com.libertytech.tinderlike.usecases.RegisterUseCase
 import com.libertytech.tinderlike.usecases.UserIsAuthUseCase
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TinderLikeTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    LoginScreen()
                 }
             }
         }
