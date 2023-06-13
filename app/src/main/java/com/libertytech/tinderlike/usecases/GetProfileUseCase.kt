@@ -4,7 +4,7 @@ import com.libertytech.tinderlike.repositories.UserRepository
 class GetProfileUseCase {
     private val userRepository : UserRepository = UserRepository()
 
-    suspend fun execute(id: Int): User? {
-        return userRepository.getProfile("guy")
+    suspend fun execute(id: String): User? {
+        return userRepository.getProfile(id)
     }
 }
