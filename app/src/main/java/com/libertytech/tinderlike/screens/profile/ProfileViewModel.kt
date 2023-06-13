@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 data class ProfileUiState(
     val name: String = "Nom",
-    val description: String = "Description",
+    val description: String = "Description !",
     val pictureUrl: String = "PictureUrl"
 )
 class ProfileViewModel: ViewModel() {
