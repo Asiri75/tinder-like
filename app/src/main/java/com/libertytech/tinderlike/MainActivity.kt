@@ -1,5 +1,6 @@
 package com.libertytech.tinderlike
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,7 +23,7 @@ import kotlinx.coroutines.tasks.await
 class MainActivity : ComponentActivity() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val partenairesCollection = db.collection("partenaires") // Remplace "partenaires" par le nom de ta collection dans Firestore
+    private val partenairesCollection = db.collection("user")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("CoroutineCreationDuringComposition")
     @Composable
     fun FetchPartenaires() {
         val partenaires = mutableListOf<Partenaire>()
