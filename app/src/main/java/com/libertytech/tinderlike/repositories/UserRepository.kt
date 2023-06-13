@@ -5,20 +5,22 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+import kotlinx.coroutines.tasks.await
+
 class UserRepository {
     private val db = Firebase.firestore.collection("users")
-    fun getProfile(id: String) {
-       val docRef = db.document(id)
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
-                } else {
-                    Log.d("UserRepository - getProfile", "No such document")
-                }
+
+    suspend fun getProfile(id: String) {
+        try {
+            val document = db.document(id).get().await()
+
+            if (document.exists()) {
+                Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
+            } else {
+                Log.d("UserRepository - getProfile", "No such document")
             }
-            .addOnFailureListener { exception ->
-                Log.d("UserRepository - getProfile", "get failed with ", exception)
-            }
+        } catch (exception: Exception) {
+            Log.d("UserRepository - getProfile", "get failed with ", exception)
+        }
     }
 }
