@@ -2,7 +2,7 @@ package com.libertytech.tinderlike.usecases
 
 import com.libertytech.tinderlike.repositories.AuthRepository
 
-class UserIsAuth {
+class UserIsAuthUseCase {
 
     private val authRepository: AuthRepository = AuthRepository()
 
