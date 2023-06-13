@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784752363808",
+    "project_id": "tinder-like-3b041",
+    "storage_bucket": "tinder-like-3b041.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784752363808:android:59dbfaead7106ce4c26f45",
+        "android_client_info": {
+          "package_name": "com.libertytech.tinderlike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784752363808-66isu9u5c6hh1v7vfp8vaf86cluvnauf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1-gbQk13Pz08VcrmL1I8Yq3liCV_3fd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784752363808-66isu9u5c6hh1v7vfp8vaf86cluvnauf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
