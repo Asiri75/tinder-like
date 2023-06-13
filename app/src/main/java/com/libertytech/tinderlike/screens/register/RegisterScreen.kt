@@ -1,4 +1,14 @@
 package com.libertytech.tinderlike.screens.register
 
-class RegisterScreen {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun RegisterScreen() {
+    RegisterLayout()
 }
+
+@Composable
+fun RegisterLayout() {
+
+}
+

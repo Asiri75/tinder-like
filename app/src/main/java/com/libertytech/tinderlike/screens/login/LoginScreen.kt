@@ -1,5 +1,7 @@
 package com.libertytech.tinderlike.screens.login
 
+import Email
+import Password
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,57 +33,6 @@ import com.libertytech.tinderlike.R
 @Composable
 fun LoginScreen() {
     LoginLayout()
-}
-
-@Composable
-private fun Email() {
-    var value by remember {
-        mutableStateOf("")
-    }
-
-    OutlinedTextField(
-        value = value,
-        onValueChange = { newText ->
-            value = newText
-        },
-        label = { Text(text = "Email") },
-        placeholder = { Text(text = "Enter your email") }
-    )
-}
-
-@Composable
-private fun Password() {
-    var value by remember {
-        mutableStateOf("")
-    }
-
-    var showPassword by remember {
-        mutableStateOf(false)
-    }
-
-    TextField(
-        value = value,
-        onValueChange = { newText ->
-            value = newText
-        },
-        label = { Text(text = "Password") },
-        placeholder = { Text(text = "Enter your password") },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Outlined.Lock,
-                contentDescription = "Lock Icon"
-            )
-        },
-        trailingIcon = {
-            IconButton(onClick = { showPassword = !showPassword }) {
-                Icon(
-                    imageVector = if (showPassword) Icons.Outlined.Clear  else Icons.Outlined.Call,
-                    contentDescription = if (showPassword) "Show Password" else "Hide Password"
-                )
-            }
-        },
-        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
-    )
 }
 
 @Composable
