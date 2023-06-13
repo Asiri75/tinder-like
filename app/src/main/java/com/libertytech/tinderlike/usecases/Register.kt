@@ -5,7 +5,7 @@ import com.libertytech.tinderlike.repositories.AuthRepository
 class Register {
     private val authRepository: AuthRepository = AuthRepository()
 
-    suspend fun execute(email: String, password: String) {
+    suspend fun execute(email: String, password: String): Boolean {
         return authRepository.register(email, password)
     }
 }

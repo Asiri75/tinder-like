@@ -17,19 +17,21 @@ class AuthRepository {
         }
     }
 
-    suspend fun register(email: String, password: String) {
-        try {
-            auth.createUserWithEmailAndPassword(email, password)
+    suspend fun register(email: String, password: String): Boolean {
+        return try {
+            auth.createUserWithEmailAndPassword(email, password).isSuccessful
         } catch (e: Exception) {
             e.printStackTrace()
+            false
         }
     }
 
-    suspend fun login(email: String, password: String) {
-        try {
-            auth.signInWithEmailAndPassword(email, password)
+    suspend fun login(email: String, password: String): Boolean {
+        return try {
+            auth.signInWithEmailAndPassword(email, password).isSuccessful
         } catch (e: Exception) {
             e.printStackTrace()
+            false
         }
     }
 }
