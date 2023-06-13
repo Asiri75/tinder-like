@@ -6,9 +6,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class UserRepository {
+    private val db = Firebase.firestore.collection("users")
     fun getProfile(id: String) {
-        val db = Firebase.firestore
-        val docRef = db.collection("cities").document("SF")
+       val docRef = db.document(id)
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
