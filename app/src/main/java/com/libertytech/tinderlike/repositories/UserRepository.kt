@@ -16,13 +16,17 @@ class UserRepository {
 
             if (document.exists()) {
                 Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
+
+                return document.toObject(User::class.java)
             } else {
                 Log.d("UserRepository - getProfile", "No such document")
             }
         } catch (exception: Exception) {
             Log.d("UserRepository - getProfile", "get failed with ", exception)
         }
+        return null;
     }
+
 
     suspend fun updateProfile(user: User) {
         val docRef = db.document(user.id)
