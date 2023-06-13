@@ -16,7 +16,7 @@ class UserRepository {
 
             if (document.exists()) {
                 Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
-                
+
                 return document.toObject(User::class.java)
             } else {
                 Log.d("UserRepository - getProfile", "No such document")
