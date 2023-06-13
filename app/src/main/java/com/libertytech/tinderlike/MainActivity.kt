@@ -15,9 +15,21 @@ import com.libertytech.tinderlike.ui.theme.TinderLikeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Crée une liste de partenaires
+        val listePartenaires = mutableListOf(
+            Partenaire("Alice", 25, "J'aime les voyages et les chiens."),
+            Partenaire("Bob", 30, "Je suis passionné de photographie."),
+            Partenaire("Caroline", 28, "J'adore la musique et la danse.")
+        )
+
+        // Affiche les noms des partenaires dans la console
+        for (partenaire in listePartenaires) {
+            println(partenaire.nom)
+        }
+
         setContent {
             TinderLikeTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                     Greeting("Android")
                 }
@@ -25,6 +37,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+data class Partenaire(val nom: String, val age: Int, val description: String)
 
 @Composable
 fun Greeting(name: String) {
