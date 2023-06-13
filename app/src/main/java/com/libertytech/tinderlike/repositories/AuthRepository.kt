@@ -11,19 +11,25 @@ class AuthRepository {
     suspend fun userIsAuth (): FirebaseUser? {
         return try {
             auth.currentUser
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun register(email: String, password: String): FirebaseUser? {
-        auth.createUserWithEmailAndPassword(email, password)
-        return auth.currentUser
+    suspend fun register(email: String, password: String) {
+        try {
+            auth.createUserWithEmailAndPassword(email, password)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    suspend fun login(email: String, password: String): FirebaseUser? {
-        auth.signInWithEmailAndPassword(email, password)
-        return auth.currentUser
+    suspend fun login(email: String, password: String) {
+        try {
+            auth.signInWithEmailAndPassword(email, password)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
