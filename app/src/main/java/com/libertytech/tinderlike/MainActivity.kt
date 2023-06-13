@@ -23,7 +23,7 @@ import kotlinx.coroutines.tasks.await
 class MainActivity : ComponentActivity() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val partenairesCollection = db.collection("user")
+    private val partenairesCollection = db.collection("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
