@@ -2,6 +2,7 @@ package com.libertytech.tinderlike.screens.register
 
 import Email
 import Password
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,14 +22,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.libertytech.tinderlike.screens.login.LoginViewModel
 
 @Composable
-fun RegisterScreen() {
-    val registerViewModel: RegisterViewModel = viewModel()
-    RegisterLayout(registerViewModel = RegisterViewModel())
+fun RegisterScreen(
+    registerViewModel: RegisterViewModel = viewModel(),
+    onNavigateToLogin: () -> Unit
+) {
+    RegisterLayout(registerViewModel = RegisterViewModel(), onNavigateToLogin = onNavigateToLogin)
 }
 
 @Composable
 fun RegisterLayout(
-    registerViewModel: RegisterViewModel
+    registerViewModel: RegisterViewModel,
+    onNavigateToLogin: () -> Unit
 ) {
     val userEmail = remember { mutableStateOf(TextFieldValue("")) }
     val userPassword = remember { mutableStateOf(TextFieldValue("")) }
@@ -63,6 +67,16 @@ fun RegisterLayout(
                 fontSize = 16.sp
             )
         }
+
+        Text(
+            text = "Already have an account? Login",
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.clickable(
+                onClick = onNavigateToLogin,
+            ).padding(top = 16.dp),
+            color = MaterialTheme.colors.primary,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
