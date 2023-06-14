@@ -1,5 +1,7 @@
 package com.libertytech.tinderlike.screens.login
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import com.libertytech.tinderlike.usecases.LoginUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -15,9 +17,9 @@ class LoginViewModel: ViewModel() {
     val uiState: StateFlow<LoginUIState> = _uiState.asStateFlow()
 
 
-    fun login(mail: String, password: String){
+    fun login(email: MutableState<TextFieldValue>, password: MutableState<TextFieldValue>){
         CoroutineScope(Dispatchers.IO).launch {
-            _uiState.value = LoginUIState(loginUseCase.execute(mail, password))
+            _uiState.value = LoginUIState(loginUseCase.execute(email.value.text, password.value.text))
         }
     }
 

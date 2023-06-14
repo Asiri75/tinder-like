@@ -8,44 +8,34 @@ import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-fun Email() {
-    var value by remember {
-        mutableStateOf("")
-    }
-
+fun Email(userEmail: MutableState<TextFieldValue>) {
     OutlinedTextField(
-        value = value,
-        onValueChange = { newText ->
-            value = newText
-        },
+        value = userEmail.value,
+        onValueChange = { userEmail.value = it },
         label = { Text(text = "Email") },
         placeholder = { Text(text = "Enter your email") }
     )
 }
 
 @Composable
-fun Password() {
-    var value by remember {
-        mutableStateOf("")
-    }
-
+fun Password(userPassword: MutableState<TextFieldValue>) {
     var showPassword by remember {
         mutableStateOf(false)
     }
 
     TextField(
-        value = value,
-        onValueChange = { newText ->
-            value = newText
-        },
+        value = userPassword.value,
+        onValueChange = { userPassword.value = it },
         label = { Text(text = "Password") },
         placeholder = { Text(text = "Enter your password") },
         leadingIcon = {

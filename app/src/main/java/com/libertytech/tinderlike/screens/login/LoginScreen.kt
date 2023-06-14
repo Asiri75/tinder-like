@@ -6,37 +6,33 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Call
-import androidx.compose.material.icons.outlined.Clear
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.libertytech.tinderlike.R
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun LoginScreen() {
-    LoginLayout()
+fun LoginScreen(
+    loginViewModel: LoginViewModel = viewModel()
+) {
+    LoginLayout(loginViewModel = loginViewModel)
 }
 
 @Composable
-fun LoginLayout() {
+fun LoginLayout(
+    loginViewModel: LoginViewModel
+) {
+    val userEmail = remember { mutableStateOf(TextFieldValue("")) }
+    val userPassword = remember { mutableStateOf(TextFieldValue("")) }
+
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -55,12 +51,12 @@ fun LoginLayout() {
             fontWeight = FontWeight.SemiBold
         )
 
-        Email()
-        Password()
+        Email(userEmail)
+        Password(userPassword)
 
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { }
+            onClick = { loginViewModel.login(userEmail, userPassword) }
         ) {
             Text(
                 text = "Login",
