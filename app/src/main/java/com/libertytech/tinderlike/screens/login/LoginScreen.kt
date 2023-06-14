@@ -20,22 +20,23 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.libertytech.tinderlike.screens.register.RegisterScreen
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = viewModel()
+    loginViewModel: LoginViewModel = viewModel(),
+    onNavigateToRegister: () -> Unit
 ) {
-    LoginLayout(loginViewModel = loginViewModel)
+    LoginLayout(loginViewModel = loginViewModel, onNavigateToRegister = onNavigateToRegister)
 }
 
 @Composable
 fun LoginLayout(
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
+    onNavigateToRegister: () -> Unit
+
 ) {
     val userEmail = remember { mutableStateOf(TextFieldValue("")) }
     val userPassword = remember { mutableStateOf(TextFieldValue("")) }
-
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -49,7 +50,7 @@ fun LoginLayout(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Enter Your Username & Password",
+            text = "Login",
             style = typography.subtitle1,
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold
@@ -72,7 +73,7 @@ fun LoginLayout(
             text = "Don't have an account? Register",
             style = typography.body2,
             modifier = Modifier.clickable(
-                onClick = { /*TODO Make redirection to register view */ },
+                onClick = onNavigateToRegister,
             ).padding(top = 16.dp),
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.Bold
