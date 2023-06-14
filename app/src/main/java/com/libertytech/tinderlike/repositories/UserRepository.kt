@@ -1,10 +1,9 @@
 package com.libertytech.tinderlike.repositories
 
-import com.libertytech.tinderlike.model.User
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
+import com.libertytech.tinderlike.model.User
 import kotlinx.coroutines.tasks.await
 
 class UserRepository {
@@ -15,9 +14,7 @@ class UserRepository {
             val document = db.document(id).get().await()
 
             if (document.exists()) {
-                Log.d("UserRepository- getProfile", "DocumentSnapshot data: ${document.data}")
-
-                return document.toObject(User::class.java)
+                Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
             } else {
                 Log.d("UserRepository - getProfile", "No such document")
             }
@@ -27,6 +24,23 @@ class UserRepository {
         return null
     }
 
+    suspend fun getPartners(): List<User> {
+        var partners = listOf<User>()
+
+        try {
+            val querySnapshot = db.get().await()
+
+
+            partners = querySnapshot.documents.mapNotNull { it.toObject(User::class.java) }
+
+
+
+        } catch (exception: Exception) {
+            Log.d("UserRepository - getPartenaires", "Error getting partenaires: ", exception)
+        }
+
+        return partners
+    }
 
     suspend fun updateProfile(user: User) {
         if(user.id.isNullOrEmpty()){
@@ -42,7 +56,4 @@ class UserRepository {
                 Log.d("UserRepository - updateProfile", "Failed to update user", exception)
             }
     }
-
-
-
 }
