@@ -24,7 +24,22 @@ class UserRepository {
         } catch (exception: Exception) {
             Log.d("UserRepository - getProfile", "get failed with ", exception)
         }
-        return null;
+        return null
     }
+
+
+    suspend fun updateProfile(user: User) {
+        val docRef = db.document(user.id)
+
+        docRef.set(user)
+            .addOnSuccessListener {
+                Log.d("UserRepository - updateProfile", "User updated successfully")
+            }
+            .addOnFailureListener { exception ->
+                Log.d("UserRepository - updateProfile", "Failed to update user", exception)
+            }
+    }
+
+
 
 }
