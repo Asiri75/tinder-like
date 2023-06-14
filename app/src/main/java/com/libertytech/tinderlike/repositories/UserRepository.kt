@@ -29,6 +29,9 @@ class UserRepository {
 
 
     suspend fun updateProfile(user: User) {
+        if(user.id.isNullOrEmpty()){
+            user.id = db.document().id
+        }
         val docRef = db.document(user.id)
 
         docRef.set(user)

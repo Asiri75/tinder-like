@@ -2,6 +2,7 @@ package com.libertytech.tinderlike.screens.profile
 
 import GetProfileUseCase
 import androidx.lifecycle.ViewModel
+import com.libertytech.tinderlike.usecases.UpdateProfileUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,21 +19,22 @@ data class ProfileUiState(
 )
 class ProfileViewModel: ViewModel() {
     private val getProfileUseCase = GetProfileUseCase()
+    private val updateProfileUseCase = UpdateProfileUseCase()
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
-    fun makeRequest(name: String, description: String, imageUrl: String) {
+    init {
+        var user = ProfileUiState("Nom","Description","pictureUrl")
+        _uiState.value = user
+    }
+    fun makeRequest(user: com.libertytech.tinderlike.model.User) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = getProfileUseCase.execute("user")
+            val response = updateProfileUseCase.execute(user)
 
             withContext(Dispatchers.Main) {
                 if (response != null) {
-                    _uiState.value = ProfileUiState(
-                        name = response.name,
-                        description = response.description,
-                        pictureUrl = response.pictureUrl
-                    )
+                    _uiState.value = ProfileUiState("Nom","Description","pictureUrl")
                 }
             }
         }
