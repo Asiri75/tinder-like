@@ -10,7 +10,7 @@ import kotlinx.coroutines.tasks.await
 class UserRepository {
     private val db = Firebase.firestore.collection("users")
 
-    suspend fun getProfile(id: String) {
+    suspend fun getProfile(id: String): User? {
         try {
             val document = db.document(id).get().await()
 
@@ -24,7 +24,7 @@ class UserRepository {
         } catch (exception: Exception) {
             Log.d("UserRepository - getProfile", "get failed with ", exception)
         }
-        return null;
+        return null
     }
 
 
