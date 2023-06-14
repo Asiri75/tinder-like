@@ -9,13 +9,17 @@ import kotlinx.coroutines.tasks.await
 class AuthRepository {
     private var auth: FirebaseAuth = Firebase.auth
 
-    suspend fun userIsAuth (): FirebaseUser? {
+    fun userIsAuth (): FirebaseUser? {
         return try {
             auth.currentUser
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
+    }
+
+    fun getUserId(): String? {
+        return auth.currentUser?.uid
     }
 
     suspend fun register(email: String, password: String): Boolean {
