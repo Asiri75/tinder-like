@@ -35,4 +35,14 @@ class AuthRepository {
             false
         }
     }
+
+    suspend fun logout(): Boolean{
+        return try {
+            auth.signOut()
+            true
+        }catch(e: Exception){
+            e.printStackTrace()
+            false
+        }
+    }
 }
