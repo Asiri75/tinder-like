@@ -11,6 +11,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,19 +26,27 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(),
-    onNavigateToRegister: () -> Unit
+    navigateToRegister: () -> Unit,
+    navigateToProfile: () -> Unit
 ) {
-    LoginLayout(loginViewModel = loginViewModel, onNavigateToRegister = onNavigateToRegister)
+    val loginUiState by loginViewModel.uiState.collectAsState()
+    LoginLayout(loginViewModel = loginViewModel, loginUiState = loginUiState, navigateToRegister = navigateToRegister, navigateToProfile = navigateToProfile)
 }
 
 @Composable
 fun LoginLayout(
     loginViewModel: LoginViewModel,
-    onNavigateToRegister: () -> Unit
+    loginUiState: LoginUIState,
+    navigateToRegister: () -> Unit,
+    navigateToProfile: () -> Unit
 
 ) {
     val userEmail = remember { mutableStateOf(TextFieldValue("")) }
     val userPassword = remember { mutableStateOf(TextFieldValue("")) }
+
+    if (loginUiState.userIsLog) {
+        navigateToProfile()
+    }
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -73,7 +83,7 @@ fun LoginLayout(
             text = "Don't have an account? Register",
             style = typography.body2,
             modifier = Modifier.clickable(
-                onClick = onNavigateToRegister,
+                onClick = navigateToRegister,
             ).padding(top = 16.dp),
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.Bold
