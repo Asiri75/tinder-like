@@ -17,9 +17,9 @@ class LoginViewModel: ViewModel() {
     val uiState: StateFlow<LoginUIState> = _uiState.asStateFlow()
 
 
-    fun login(email: MutableState<TextFieldValue>, password: MutableState<TextFieldValue>){
+    fun login(email: String, password: String){
         CoroutineScope(Dispatchers.IO).launch {
-            _uiState.value = LoginUIState(loginUseCase.execute(email.value.text, password.value.text))
+            _uiState.value = LoginUIState(loginUseCase.execute(email, password))
         }
     }
 

@@ -2,10 +2,12 @@ package com.libertytech.tinderlike.screens.login
 
 import Email
 import Password
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.libertytech.tinderlike.screens.register.RegisterScreen
 
 @Composable
 fun LoginScreen(
@@ -32,6 +35,7 @@ fun LoginLayout(
 ) {
     val userEmail = remember { mutableStateOf(TextFieldValue("")) }
     val userPassword = remember { mutableStateOf(TextFieldValue("")) }
+
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -56,12 +60,22 @@ fun LoginLayout(
 
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { loginViewModel.login(userEmail, userPassword) }
+            onClick = { loginViewModel.login(userEmail.value.text, userPassword.value.text) }
         ) {
             Text(
                 text = "Login",
                 fontSize = 16.sp
             )
         }
+
+        Text(
+            text = "Don't have an account? Register",
+            style = typography.body2,
+            modifier = Modifier.clickable(
+                onClick = { /*TODO Make redirection to register view */ },
+            ).padding(top = 16.dp),
+            color = MaterialTheme.colors.primary,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
