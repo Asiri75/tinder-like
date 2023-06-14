@@ -13,17 +13,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.libertytech.tinderlike.screens.login.LoginScreen
+import com.libertytech.tinderlike.screens.profile.ProfileScreen
 import com.libertytech.tinderlike.screens.register.RegisterScreen
 import com.libertytech.tinderlike.ui.theme.TinderLikeTheme
+import com.libertytech.tinderlike.usecases.UserIsAuthUseCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val userIsAuthUseCase = UserIsAuthUseCase()
+        var userIsAuth: Boolean? = null
+        var startDestination: String = ""
+
+        CoroutineScope(Dispatchers.IO).launch {
+            userIsAuth = userIsAuthUseCase.execute()
+        }
+
+        startDestination = if(userIsAuth == true) {
+            "update_profile"
+        } else {
+            "login"
+        }
+
 
         setContent {
             TinderLikeTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    MainScreenView()
+                    MainScreenView(startDestination = startDestination)
                 }
             }
         }
@@ -33,10 +52,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreenView(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "login"
+    startDestination: String
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable("login") { LoginScreen(onNavigateToRegister = { navController.navigate("register") }) }
+        composable("login") {
+            LoginScreen(
+                navigateToRegister = { navController.navigate("register") },
+                navigateToProfile = { navController.navigate("profile") }
+            )
+        }
         composable("register") { RegisterScreen(onNavigateToLogin = { navController.navigate("login") }) }
+        composable("profile") { ProfileScreen() }
     }
 }
