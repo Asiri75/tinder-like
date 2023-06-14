@@ -5,6 +5,6 @@ class GetPartenersUseCase() {
     private val userRepository : UserRepository = UserRepository()
 
     suspend operator fun invoke(): List<User> {
-        return userRepository.getPartenaires()
+        return userRepository.getPartners()
     }
 }

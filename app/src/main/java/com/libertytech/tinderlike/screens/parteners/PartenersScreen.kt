@@ -26,8 +26,9 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun PartenairesScreen(viewModel: PartenairesViewModel = viewModel()) {
-    val partenaires = viewModel.partenairesState.collectAsState(initial = emptyList()).value
+fun PartnersScreen(viewModel: PartnersViewModel = viewModel()) {
+    val partnersState = viewModel.partnersState.collectAsState(initial = emptyList()).value
+
 
     LaunchedEffect(Unit) {
         viewModel.fetchPartenaires()
@@ -37,7 +38,7 @@ fun PartenairesScreen(viewModel: PartenairesViewModel = viewModel()) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        if (partenaires.isNotEmpty()) {
+        if (partnersState.isNotEmpty()) {
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
@@ -51,7 +52,7 @@ fun PartenairesScreen(viewModel: PartenairesViewModel = viewModel()) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(partenaires) { partenaire ->
+                    items(partnersState) { partenaire ->
 
                         Card(
                             modifier = Modifier

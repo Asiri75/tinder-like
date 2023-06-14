@@ -2,7 +2,6 @@ package com.libertytech.tinderlike.repositories
 
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.libertytech.tinderlike.model.User
 import kotlinx.coroutines.tasks.await
@@ -10,7 +9,7 @@ import kotlinx.coroutines.tasks.await
 class UserRepository {
     private val db = Firebase.firestore.collection("users")
 
-    suspend fun getProfile(id: String) {
+    suspend fun getProfile(id: String): User? {
         try {
             val document = db.document(id).get().await()
 
@@ -22,15 +21,17 @@ class UserRepository {
         } catch (exception: Exception) {
             Log.d("UserRepository - getProfile", "get failed with ", exception)
         }
+        return null
     }
 
-    suspend fun getPartenaires(): List<User> {
-        val partenaires = listOf<User>()
+    suspend fun getPartners(): List<User> {
+        var partners = listOf<User>()
 
         try {
             val querySnapshot = db.get().await()
 
-           var partenaires = querySnapshot.documents.mapNotNull { it.toObject() }
+
+            partners = querySnapshot.documents.mapNotNull { it.toObject(User::class.java) }
 
 
 
@@ -38,6 +39,18 @@ class UserRepository {
             Log.d("UserRepository - getPartenaires", "Error getting partenaires: ", exception)
         }
 
-        return partenaires
+        return partners
+    }
+
+    suspend fun updateProfile(user: User) {
+        val docRef = db.document(user.id)
+
+        docRef.set(user)
+            .addOnSuccessListener {
+                Log.d("UserRepository - updateProfile", "User updated successfully")
+            }
+            .addOnFailureListener { exception ->
+                Log.d("UserRepository - updateProfile", "Failed to update user", exception)
+            }
     }
 }
