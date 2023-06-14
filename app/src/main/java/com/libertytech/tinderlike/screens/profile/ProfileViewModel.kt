@@ -22,7 +22,7 @@ class ProfileViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
-    fun makeRequest(brandDescription: String) {
+    fun makeRequest(name: String, description: String, imageUrl: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = getProfileUseCase.execute("user")
 

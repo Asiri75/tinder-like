@@ -52,7 +52,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
             )
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { brandNameViewModel.makeRequest(searchedBrandName.value.text) }
+                onClick = { profileViewModel.makeRequest(searchedName, searchedDescription, searchedImageUrl) }
             ) {
                 Text(
                     text = "C'est parti !",
