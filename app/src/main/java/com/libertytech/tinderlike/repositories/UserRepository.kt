@@ -15,7 +15,7 @@ class UserRepository {
             val document = db.document(id).get().await()
 
             if (document.exists()) {
-                Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
+                Log.d("UserRepository- getProfile", "DocumentSnapshot data: ${document.data}")
 
                 return document.toObject(User::class.java)
             } else {
