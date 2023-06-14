@@ -2,8 +2,9 @@ package com.libertytech.tinderlike.repositories
 
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.libertytech.tinderlike.model.Partenaire
+import com.libertytech.tinderlike.model.User
 import kotlinx.coroutines.tasks.await
 
 class UserRepository {
@@ -23,21 +24,15 @@ class UserRepository {
         }
     }
 
-    suspend fun getPartenaires(): List<Partenaire> {
-        val partenaires = mutableListOf<Partenaire>()
+    suspend fun getPartenaires(): List<User> {
+        val partenaires = listOf<User>()
 
         try {
             val querySnapshot = db.get().await()
 
-            for (document in querySnapshot.documents) {
-                val nom = document.getString("nom") ?: ""
-                val age = document.getLong("age")?.toInt() ?: 0
-                val description = document.getString("description") ?: ""
-                val pictureUrl = document.getString("pictureUrl") ?: ""
+           var partenaires = querySnapshot.documents.mapNotNull { it.toObject() }
 
-                val partenaire = Partenaire(nom, age, description, pictureUrl)
-                partenaires.add(partenaire)
-            }
+
 
         } catch (exception: Exception) {
             Log.d("UserRepository - getPartenaires", "Error getting partenaires: ", exception)

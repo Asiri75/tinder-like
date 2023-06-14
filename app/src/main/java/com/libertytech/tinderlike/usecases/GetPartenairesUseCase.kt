@@ -1,9 +1,6 @@
 package com.libertytech.tinderlike.usecases
 
-import com.libertytech.tinderlike.model.Partenaire
-import com.libertytech.tinderlike.repositories.UserRepository
-
-class GetPartenaires(private val userRepository: UserRepository) {
+class GetPartenairesUseCase() {
     suspend operator fun invoke(): List<Partenaire> {
         val partenaires = mutableListOf<Partenaire>()
 
