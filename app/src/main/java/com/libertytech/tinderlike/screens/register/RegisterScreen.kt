@@ -10,6 +10,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,24 +25,33 @@ import com.libertytech.tinderlike.screens.login.LoginViewModel
 @Composable
 fun RegisterScreen(
     registerViewModel: RegisterViewModel = viewModel(),
-    onNavigateToLogin: () -> Unit
+    onNavigateToLogin: () -> Unit,
+    onNavigateToProfile: () -> Unit
 ) {
-    RegisterLayout(registerViewModel = RegisterViewModel(), onNavigateToLogin = onNavigateToLogin)
+    RegisterLayout(
+        registerViewModel = RegisterViewModel(),
+        onNavigateToLogin = onNavigateToLogin,
+        navigateToProfile = onNavigateToProfile)
 }
 
 @Composable
 fun RegisterLayout(
     registerViewModel: RegisterViewModel,
-    onNavigateToLogin: () -> Unit
+    onNavigateToLogin: () -> Unit,
+    navigateToProfile: () -> Unit
 ) {
-    val userEmail = remember { mutableStateOf(TextFieldValue("")) }
-    val userPassword = remember { mutableStateOf(TextFieldValue("")) }
+    val userEmail = remember { mutableStateOf(TextFieldValue("toto@toto.fr")) }
+    val userPassword = remember { mutableStateOf(TextFieldValue("totodhefr")) }
+    val registerUiState = registerViewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
         val focusManager = LocalFocusManager.current
 
+        if (registerUiState.value.init) {
+            navigateToProfile()
+        }
         Text(
             text = "Teender",
             style = MaterialTheme.typography.h1,
@@ -71,9 +81,11 @@ fun RegisterLayout(
         Text(
             text = "Already have an account? Login",
             style = MaterialTheme.typography.body2,
-            modifier = Modifier.clickable(
-                onClick = onNavigateToLogin,
-            ).padding(top = 16.dp),
+            modifier = Modifier
+                .clickable(
+                    onClick = onNavigateToLogin,
+                )
+                .padding(top = 16.dp),
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.Bold
         )

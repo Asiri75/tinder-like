@@ -47,15 +47,16 @@ class ProfileViewModel : ViewModel() {
                 }
             }
         }
+    }
 
-        fun getProfile() {
-            viewModelScope.launch {
-                val response = getProfileUseCase.execute()
 
-                withContext(Dispatchers.Main) {
-                    if (response != null) {
-                        _uiState.value = response
-                    }
+    fun getProfile() {
+        viewModelScope.launch {
+            val response = getProfileUseCase.execute()
+
+            withContext(Dispatchers.Main) {
+                if (response != null) {
+                    _uiState.value = response
                 }
             }
         }

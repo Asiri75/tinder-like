@@ -18,7 +18,8 @@ class RegisterViewModel: ViewModel() {
 
     fun register(mail: String, password: String){
         CoroutineScope(Dispatchers.IO).launch {
-            _uiState.value = RegisterUIState(registerUseCase.execute(mail, password))
+            val response = registerUseCase.execute(mail, password)
+            _uiState.value = RegisterUIState(response)
         }
     }
 

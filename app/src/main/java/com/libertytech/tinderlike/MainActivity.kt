@@ -25,19 +25,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userIsAuthUseCase = UserIsAuthUseCase()
-        var userIsAuth: Boolean? = null
-        var startDestination: String = ""
-
-        CoroutineScope(Dispatchers.IO).launch {
-            userIsAuth = userIsAuthUseCase.execute()
-        }
-
-        startDestination = if(userIsAuth == true) {
-            "update_profile"
-        } else {
-            "login"
-        }
-
+        val startDestination = if (userIsAuthUseCase.execute())
+            "profile"
+        else "login"
 
         setContent {
             TinderLikeTheme {
@@ -61,7 +51,12 @@ fun MainScreenView(
                 navigateToProfile = { navController.navigate("profile") }
             )
         }
-        composable("register") { RegisterScreen(onNavigateToLogin = { navController.navigate("login") }) }
+        composable("register") {
+            RegisterScreen(
+                onNavigateToLogin = { navController.navigate("login") },
+                onNavigateToProfile = { navController.navigate("profile") }
+            )
+        }
         composable("profile") { ProfileScreen() }
     }
 }

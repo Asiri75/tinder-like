@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(LoginUIState())
@@ -17,7 +18,10 @@ class LoginViewModel: ViewModel() {
 
     fun login(email: String, password: String){
         CoroutineScope(Dispatchers.IO).launch {
-            _uiState.value = LoginUIState(loginUseCase.execute(email, password))
+            val result = loginUseCase.execute(email, password)
+            withContext(Dispatchers.Main){
+                _uiState.value = LoginUIState(result)
+            }
         }
         Log.d("LOGIN", _uiState.value.userIsLog.toString())
     }

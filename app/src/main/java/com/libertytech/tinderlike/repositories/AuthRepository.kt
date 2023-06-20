@@ -9,7 +9,7 @@ import kotlinx.coroutines.tasks.await
 class AuthRepository {
     private var auth: FirebaseAuth = Firebase.auth
 
-    fun userIsAuth (): FirebaseUser? {
+    fun userIsAuth(): FirebaseUser? {
         return try {
             auth.currentUser
         } catch (e: Exception) {
@@ -24,7 +24,8 @@ class AuthRepository {
 
     suspend fun register(email: String, password: String): Boolean {
         return try {
-            auth.createUserWithEmailAndPassword(email, password).await().user != null
+            val response = auth.createUserWithEmailAndPassword(email, password).await()
+            response.user != null
         } catch (e: Exception) {
             e.printStackTrace()
             false
@@ -40,11 +41,11 @@ class AuthRepository {
         }
     }
 
-    suspend fun logout(): Boolean{
+    suspend fun logout(): Boolean {
         return try {
             auth.signOut()
             true
-        }catch(e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             false
         }
