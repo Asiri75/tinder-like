@@ -6,7 +6,7 @@ class UserIsAuthUseCase {
 
     private val authRepository: AuthRepository = AuthRepository()
 
-    suspend fun execute(): Boolean {
+    fun execute(): Boolean {
         return try {
             authRepository.userIsAuth() != null
         } catch (e: Exception){
