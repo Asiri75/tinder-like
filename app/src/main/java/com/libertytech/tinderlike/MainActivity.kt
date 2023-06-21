@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreenView(
     navController: NavHostController = rememberNavController(),
-    startDestination: String
+     startDestination: String
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable("login") {

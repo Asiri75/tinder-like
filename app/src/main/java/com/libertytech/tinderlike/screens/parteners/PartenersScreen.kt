@@ -24,11 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun PartnersScreen(viewModel: PartnersViewModel = viewModel()) {
+    val userId = "1"
     val partnersState = viewModel.partnersState.collectAsState(initial = emptyList()).value
-
 
     LaunchedEffect(Unit) {
         viewModel.fetchPartenaires()
@@ -82,14 +81,15 @@ fun PartnersScreen(viewModel: PartnersViewModel = viewModel()) {
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Button(
-                                        onClick = { /* Action pour le like */ },
+                                        onClick = { viewModel.likePartenaire(partenaire, userId) },
                                         modifier = Modifier.padding(end = 8.dp)
                                     ) {
                                         Text(text = "Like")
                                     }
 
+
                                     Button(
-                                        onClick = { /* Action pour le dislike */ },
+                                        onClick = { viewModel.dislikePartenaire(partenaire) },
                                         modifier = Modifier.padding(start = 8.dp)
                                     ) {
                                         Text(text = "Dislike")
@@ -105,4 +105,3 @@ fun PartnersScreen(viewModel: PartnersViewModel = viewModel()) {
         }
     }
 }
-
