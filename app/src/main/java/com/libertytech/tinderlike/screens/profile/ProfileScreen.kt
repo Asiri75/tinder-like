@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,9 +28,16 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel = viewModel()
 ) {
     val profileUiState by profileViewModel.uiState.collectAsState()
+
+    // Appeler getProfile() pour récupérer les données du profil
+    LaunchedEffect(Unit) {
+        profileViewModel.getProfile()
+    }
+
     val user = remember { mutableStateOf(profileUiState) }
     ProfileLayout(profileViewModel = profileViewModel, profileUiState = profileUiState, user = user)
 }
+
 
 @Composable
 fun ProfileLayout(

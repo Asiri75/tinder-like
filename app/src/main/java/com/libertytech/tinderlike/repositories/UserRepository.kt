@@ -1,6 +1,7 @@
 package com.libertytech.tinderlike.repositories
 
 import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.libertytech.tinderlike.model.User
@@ -12,12 +13,15 @@ class UserRepository {
     suspend fun getProfile(id: String): User? {
         try {
             val document = db.document(id).get().await()
+            val user = document.toObject(User::class.java)
+            print(user)
 
             if (document.exists()) {
                 Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
             } else {
                 Log.d("UserRepository - getProfile", "No such document")
             }
+            return user
         } catch (exception: Exception) {
             Log.d("UserRepository - getProfile", "get failed with ", exception)
         }
