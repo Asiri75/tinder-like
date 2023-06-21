@@ -53,4 +53,21 @@ class UserRepository {
                 Log.d("UserRepository - updateProfile", "Failed to update user", exception)
             }
     }
+
+    suspend fun addUser(pictureUrl: String, name: String, description: String) {
+        val user = hashMapOf(
+            "pictureUrl" to pictureUrl,
+            "name" to name,
+            "description" to description
+        )
+
+        firestore.collection("users")
+            .add(user)
+            .addOnSuccessListener { documentReference ->
+                // L'ajout a réussi, vous pouvez obtenir l'ID du document ajouté avec documentReference.id
+            }
+            .addOnFailureListener { e ->
+                // Une erreur s'est produite lors de l'ajout des données
+            }
+    }
 }
