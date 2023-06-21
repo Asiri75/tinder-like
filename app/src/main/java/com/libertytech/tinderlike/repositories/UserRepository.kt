@@ -1,6 +1,7 @@
 package com.libertytech.tinderlike.repositories
 
 import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.libertytech.tinderlike.model.User
@@ -10,18 +11,20 @@ class UserRepository {
     private val db = Firebase.firestore.collection("users")
 
     suspend fun getProfile(id: String): User? {
-        try {
+        return try {
             val document = db.document(id).get().await()
-
-            if (document.exists()) {
+            val user = if (document.exists()) {
                 Log.d("UserRepository - getProfile", "DocumentSnapshot data: ${document.data}")
+                document.toObject(User::class.java)
             } else {
                 Log.d("UserRepository - getProfile", "No such document")
+                null
             }
+            user
         } catch (exception: Exception) {
             Log.d("UserRepository - getProfile", "get failed with ", exception)
+            null
         }
-        return null
     }
 
     suspend fun getPartners(): List<User> {
@@ -32,9 +35,6 @@ class UserRepository {
 
 
             partners = querySnapshot.documents.mapNotNull { it.toObject(User::class.java) }
-
-
-
         } catch (exception: Exception) {
             Log.d("UserRepository - getPartenaires", "Error getting partenaires: ", exception)
         }
@@ -42,11 +42,8 @@ class UserRepository {
         return partners
     }
 
-    suspend fun updateProfile(user: User) {
-        if(user.id.isNullOrEmpty()){
-            user.id = db.document().id
-        }
-        val docRef = db.document(user.id)
+    fun updateProfile(user: User) {
+        val docRef = db.document(user.id.orEmpty())
 
         docRef.set(user)
             .addOnSuccessListener {

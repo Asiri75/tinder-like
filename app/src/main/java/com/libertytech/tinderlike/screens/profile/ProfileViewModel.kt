@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 data class ProfileUiState(
     val name: String = "Nom",
     val description: String = "Description !",
@@ -49,10 +48,10 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-
     fun getProfile() {
         viewModelScope.launch {
             val response = getProfileUseCase.execute()
+            print(response)
 
             withContext(Dispatchers.Main) {
                 if (response != null) {
@@ -62,3 +61,4 @@ class ProfileViewModel : ViewModel() {
         }
     }
 }
+

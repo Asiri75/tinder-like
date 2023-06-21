@@ -64,14 +64,14 @@ fun PartnersScreen(viewModel: PartnersViewModel = viewModel()) {
                                 modifier = Modifier.padding(16.dp)
                             ) {
                                 Text(
-                                    text = partenaire.name,
+                                    text = partenaire.name.orEmpty(),
                                     style = MaterialTheme.typography.subtitle1,
                                     fontWeight = FontWeight.Bold
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = partenaire.description,
+                                    text = partenaire.description.orEmpty(),
                                     style = MaterialTheme.typography.body1
                                 )
 
