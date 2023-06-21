@@ -59,4 +59,15 @@ fun MainScreenView(
         }
         composable("profile") { ProfileScreen() }
     }
+    private val firestoreRepository = FirestoreRepository()
+
+    fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.MainActivity)
+
+        val pictureUrl= ""
+        val name = "John Doe"
+        val description = "ceci est un test"
+        firestoreRepository.addUser(pictureUrl,name, description)
+    }
 }
