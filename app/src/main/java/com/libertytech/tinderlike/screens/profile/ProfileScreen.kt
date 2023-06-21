@@ -33,9 +33,7 @@ fun ProfileScreen(
     LaunchedEffect(Unit) {
         profileViewModel.getProfile()
     }
-
-    val user = remember { mutableStateOf(profileUiState) }
-    ProfileLayout(profileViewModel = profileViewModel, profileUiState = profileUiState, user = user)
+    ProfileLayout(profileViewModel = profileViewModel, profileUiState = profileUiState)
 }
 
 
@@ -43,7 +41,6 @@ fun ProfileScreen(
 fun ProfileLayout(
     profileViewModel: ProfileViewModel,
     profileUiState: User,
-    user: MutableState<User>
 ) {
     Column(
         modifier = Modifier
@@ -60,31 +57,31 @@ fun ProfileLayout(
 
         TextFieldWithLabel(
             label = "Nom",
-            value = user.value.name,
-            onValueChange = { user.value = user.value.copy(name = it) },
+            value = profileUiState.name.orEmpty(),
+            onValueChange = { profileUiState.name = it },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         TextFieldWithLabel(
             label = "Description",
-            value = user.value.description,
-            onValueChange = { user.value = user.value.copy(description = it) },
+            value = profileUiState.description.orEmpty(),
+            onValueChange = { profileUiState.description = it },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         TextFieldWithLabel(
             label = "URL de l'image",
-            value = user.value.pictureUrl,
-            onValueChange = { user.value = user.value.copy(pictureUrl = it) },
+            value = profileUiState.pictureUrl.orEmpty(),
+            onValueChange = { profileUiState.pictureUrl = it },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { profileViewModel.makeRequest(user.value) }
+            onClick = { profileViewModel.makeRequest(profileUiState) }
         ) {
             Text(
                 text = "Mettre à jour",
